@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block pagename %}index{% endblock %}
+
+<body>
+
+    <!-- latest article
+    ================================================== -->
+    {% block content %}
+
+        {% if user.is_authenticated %}
+        <h3>
+            <p>Hey {{ user.username }}!</p>
+        </h3>
+        {% else %}
+            <p>Yolo {{ user.username }}!</p>
+        {% endif %}
+
+        <h2> On {{date}} </h2>
+
+        <div class="well col-md-6">
+            <p> What do you want to be doing with your life! </p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form}}
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+
+        <div>
+        <h3>
+            <p>Prezi Overview</p>
+        </h3>
+
+            <iframe src="http://prezi.com/embed/axw5-6nfe1z8/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>
+        </div>
+
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+
+        <div>
+        <h3>
+            <p>Slideshare Pitch Deck</p>
+        </h3>
+
+
+            <iframe src="http://www.slideshare.net/slideshow/embed_code/31487535" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+
+        </div>
+
+
+    {% endblock %}
+
+
+</body>
