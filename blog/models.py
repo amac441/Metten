@@ -184,3 +184,9 @@ class Search(models.Model):
 # linked in API - https://github.com/ozgur/python-linkedin
     #http://nbviewer.ipython.org/github/ptwobrussell/Mining-the-Social-Web-2nd-Edition/blob/master/ipynb/Chapter%203%20-%20Mining%20LinkedIn.ipynb
     #https://developer.linkedin.com/thread/1902
+
+
+# --- git ----
+# to pull files down - https://github.com/ozgur/python-linkedin  
+# use git pull o master  (o is what you specified form /Metten  - master is the branch)
+# change settings - http://stackoverflow.com/questions/10664244/django-how-to-manage-development-and-production-settings

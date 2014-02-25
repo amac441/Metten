@@ -32,13 +32,17 @@
                     {{ post.created.day }}
                     <span class="dmonth">{{ post.created|date:"b" }}</span>
                     <span class="dyear">{{ post.created.year }}</span>
+
                 </p>
 
-                <div class="comments">
-                    <a href="#" title="comment on...">12</a>
+                 <div class="comments">
+                    {% load disqus_tags %}
+                    <a href="/blog/{{ post.id }}#disqus_thread" data-disqus-identifier="{{ post.id }}">0</a>
+                    {% disqus_num_replies %}
                 </div>
-
             </div>
+
+
 
         </div>
 
@@ -63,9 +67,13 @@
 
             <div class="grid8 a-right">
                 <p>{{ post.body|safe|linebreaks|truncatewords:40 }}<a href="/blog/{{post.id}}">Read More...</a> </p>
+
                 <div class="comments">
-                    <a href="#" title="comment on...">11</a>
+                    {% load disqus_tags %}
+                    <a href="/blog/{{ post.id }}#disqus_thread" data-disqus-identifier="{{ post.id }}">#</a>
+                    {% disqus_num_replies %}
                 </div>
+
             </div>
         </article>
 

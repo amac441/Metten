@@ -2,6 +2,8 @@
 
 {% block pagename %}index{% endblock %}
 
+<!-- http://stackoverflow.com/questions/866272/how-can-i-build-multiple-submit-buttons-django-form  -->
+
 <body>
 
     <!-- latest article
@@ -23,13 +25,23 @@
             <form action="" method="post">
                 {% csrf_token %}
                 {{form}}
-                <button type="submit">Search</button>
+                <button type="submit", name="job_search">Search</button>
             </form>
         </div>
 
         <p>&nbsp;</p>
+        <h3> Search Linkedin </h3>
+        <div class="well col-md-6">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form_l}}
+                <button type="submit", name="linkedin_search">Search</button>
+            </form>
+        </div>
+
         <p>&nbsp;</p>
 
+        <!--
         <div>
         <h3>
             <p>Prezi Overview</p>
@@ -38,18 +50,7 @@
             <iframe src="http://prezi.com/embed/axw5-6nfe1z8/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>
         </div>
 
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-
-        <div>
-        <h3>
-            <p>Slideshare Pitch Deck</p>
-        </h3>
-
-
-            <iframe src="http://www.slideshare.net/slideshow/embed_code/31487535" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-
-        </div>
+        -->
 
 
     {% endblock %}

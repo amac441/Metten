@@ -138,8 +138,19 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     #'taggit',
     'Metten.blog',
+    'disqus',
+    'linkedin',
+    'hitcount',
     #'markdown_deux',
 )
+
+DISQUS_API_KEY = 'YK7u6669Om29L1vcuqlgRpGiN7boldpazrSEYbV6Rc0NOVWQtA16NXP63D6tW3PY'
+DISQUS_WEBSITE_SHORTNAME = 'mettentot'
+
+HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 7 }
+HITCOUNT_HITS_PER_IP_LIMIT = 0
+HITCOUNT_EXCLUDE_USER_GROUP = ( 'Editor', )
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

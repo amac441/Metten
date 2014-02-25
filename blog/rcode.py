@@ -56,8 +56,14 @@ class Rcode:
         #robjects.r('arch.feat2 <- arch.feat2[sapply(arch.feat2, is.numeric),]')
         #robjects.r('arch.feat2 <- na.omit(arch.feat2)')
 
+        # creates a column to multiple duration and Sal
         robjects.r('arch.feat2$mix <- as.numeric(arch.feat2$Duration)*as.numeric(arch.feat2$Avg_Sal)')
         robjects.r('arch.feat2 <- arch.feat2[order(arch.feat2$mix),]')
+
+        # remove values greater than standard deviation of 2
+        robjects.r('arch.feat2 <- arch.feat2[(abs(arch.feat2$mix - mean(arch.feat2$mix))< 2*sd(arch.feat2$mix)),]')
+
+
         median = robjects.r('median(arch.feat2$Job_num)')
         med = int(median[0])
 
