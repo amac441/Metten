@@ -43,6 +43,7 @@ class Rcode:
         robjects.r('arch.feat <-  arch')
         robjects.r('arch.feat$Company <- NULL #removes the class column')
         robjects.r('arch.feat$Location <- NULL')
+        robjects.r('arch.feat$Work_Description <- NULL')
         robjects.r('arch.feat$End_Date <- NULL')
         robjects.r('arch.feat$X <- NULL')
         robjects.r('arch.feat$Job_Title <- NULL')

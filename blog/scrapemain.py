@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import time
 from scraping import Scraper
 from rcode import Rcode
+from grapher import Graph
 from django.conf import settings
 from mechanize import Browser
 from Metten.blog.models import Links
@@ -32,20 +33,19 @@ class ScrapeMain:
         #pages = 1
         path1 = settings.MEDIA_ROOT
         #path1 = ''
-        path2 = '/jobs_' + jb.replace(" ","_") + '.txt'  # + "-" + city + "-" + "1"
-        filename = path1 + path2
-
+        path2 = '/jobs_' + jb.replace(" ","_")
+        path3 = '.txt'
+        filename = path1 + path2 + path3
 
         #===== CHECK IF FILE EXISTS ========
 
         if os.path.exists(filename):
             filename = filename
         else:
-
             #===== CREATE FILE IF IT DOESNT EXISTS ========
 
             file = open(filename, 'w+')
-            header = 'Res' + ';' + "URL" + ';' +  "Job_num" + ';' +  "Job_Title" + ';' +  "Company" + ';' + "Location" + ';' +  "End_Date" + ';' +  "Duration" + ';' + "Avg_Sal" + ';' + 'Company_Prestige' + '\n'
+            header = 'Res' + ';' + "URL" + ';' +  "Job_num" + ';' +  "Job_Title" + ';' +  "Company" + ';' + "Location" + ';' +  "End_Date" + ';' +  "Duration" + ';' + "Avg_Sal" + ';' + "Company_Prestige" + ';' + "Work_Description" + '\n'
             file.write(header)
 
 
@@ -99,7 +99,6 @@ class ScrapeMain:
 
         #-------- DO PLOTTING -----------
 
-        plot_listing = []
         job_cluster = []
 
         if local == "L":
@@ -127,8 +126,8 @@ class ScrapeMain:
 
                 job_cluster.append(job_list)
 
-        return {'stat':"done", 'jobs_cluster':job_cluster, 'med':range((med+2))}
 
+        return {'stat':"done", 'jobs_cluster':job_cluster, 'med':range((med+2))}
     # when doing multithreading you need to define a function and give seperate memory allocation for each thread
 
 

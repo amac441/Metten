@@ -3,13 +3,18 @@ from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 from django.contrib import auth
+
+from django.views.generic.list_detail import object_detail
+from hitcount.views import update_hit_count_ajax
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-
+	url(r'^ajax/hit/$', update_hit_count_ajax, name='hitcount_update_ajax'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'Metten.blog.views.index', name='home'),
     url(r'^plots$', 'Metten.blog.views.plots', name='plots'),
+    url(r'^graph$', 'Metten.blog.views.graph', name='graph'),
     url(r'^linker$', 'Metten.blog.views.linker', name='linker'),
     url(r'^blog/', include('Metten.blog.urls'))
 )
@@ -26,6 +31,9 @@ urlpatterns += patterns(
 		name='5years_logout'),
 
 	url(r'^survey$', direct_to_template, {'template': 'survey.html'}),
+
+	url(r'^metten$', direct_to_template, {'template': 'metten.html'}),
+
 	)
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

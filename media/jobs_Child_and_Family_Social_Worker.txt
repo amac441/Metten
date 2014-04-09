@@ -1,1 +1,0 @@
-Res;URL;Job_num;Job_Title;Company;Location;End_Date;Duration;Avg_Sal;Company_Prestige

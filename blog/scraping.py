@@ -186,6 +186,7 @@ class Scraper:
         duration = []
         avg_salary = []
         description = []
+        wrk_desc = []
         person = pers
         sc = Scraper()
 
@@ -267,6 +268,19 @@ class Scraper:
                     # ===== call to get location salary factor =======
                         avg_salary.append(sc.salary(job_title,city))
 
+
+
+                    #====== get description ======
+                        work_desc = ""
+                        work_desc = a_soup.find('p', attrs={'class':'work_description'})
+                        if work_desc:
+                            desc = work_desc.getText().encode('ascii', 'ignore')
+                            print desc
+                            wrk_desc.append(desc)
+                        else:
+                            wrk_desc.append('N/A')
+
+
                     # ------ incase company section isnt in resume ----
                 else:
                     end_date.append("NA")
@@ -275,6 +289,7 @@ class Scraper:
                     avg_salary.append("NA")
                     company.append("NA")
                     comp_prestige.append("1")
+                    wrk_desc.append('N/A')
 
 
 
@@ -284,7 +299,7 @@ class Scraper:
 
             lock.acquire()
             try:
-                stringer = str(person) + ';' + resume_url.replace("'","") + ';' +  str(i+1) + ';' +  title[i] + ';' +  company[i] + ';' + location[i] + ';' +  str(end_date[i]) + ';' +  str(duration[i]) + ';' + avg_salary[i] + ';' + str(comp_prestige[i]) + '\n'
+                stringer = str(person) + ';' + resume_url.replace("'","") + ';' +  str(i+1) + ';' +  title[i] + ';' +  company[i] + ';' + location[i] + ';' +  str(end_date[i]) + ';' +  str(duration[i]) + ';' + avg_salary[i] + ';' + str(comp_prestige[i]) + ';' + wrk_desc[i].replace(";",".") + '\n'
                 #print stringer
                 file.write(stringer)
                 print "printed file for " + res

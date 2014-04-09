@@ -7,6 +7,7 @@ from django.contrib.auth.models import User  #django default userclass
 # Job Choices
 JOB_CHOICES = (
 #http://pluralsight.com/training/Player?author=reindertjan-ekker&name=django-fundamentals-m4-models&mode=live&clip=0&course=django-fundamentals
+('Executive Assistant to CEO','Executive Assistant to CEO'),
 ('Accounting and Audit Clerk',' Accounting and Audit Clerk'),
 ('Convention and Event Planner',' Convention and Event Planner'),
 ('Accountant','Accountant'),
@@ -187,6 +188,6 @@ class Search(models.Model):
 
 
 # --- git ----
-# to pull files down - https://github.com/ozgur/python-linkedin  
+# to pull files down - https://github.com/ozgur/python-linkedin
 # use git pull o master  (o is what you specified form /Metten  - master is the branch)
 # change settings - http://stackoverflow.com/questions/10664244/django-how-to-manage-development-and-production-settings

@@ -4,6 +4,15 @@
 
 {% load truncation %}
 
+
+{% load hitcount_tags %}
+<script src="/media/js/jquery-latest.js" type="text/javascript"></script>
+<script type="text/javascript"><!--
+    $(document).ready(function() {
+        {% get_hit_count_javascript for post %}
+    });
+--></script>
+
 <body>
 
     {% block content %}
@@ -33,15 +42,16 @@
 
                     <p class="tags">
                         <span>Tagged in </span>:
-                        <a href="#">orci</a>, <a href="#">lectus</a>, <a href="#">varius</a>, <a href="#">turpis</a>
+                        <!-- <a href="#">orci</a>, <a href="#">lectus</a>, <a href="#">varius</a>, <a href="#">turpis</a> -->
                     </p>
 
                     <p class="postmeta">
-                        <span><a href="#">Comments (3)</a></span>
-                        <span><a href="#">June 17, 2013</a></span>
+                        <span> {% load disqus_tags %}
+                            <a href="/blog/{{ post.id }}#disqus_thread" data-disqus-identifier="{{ post.id }}">0</a>
+                            {% disqus_num_replies %} Comments</span>
+                        <span><a href="#">{{ post.created }}</a></span>
                         <span><a href="#">0 likes</a></span>
                         <span><a href="#">0 tweets</a></span>
-                        <span><a href="#">Edit</a></span>
                     </p>
 
                 </article>
@@ -72,211 +82,7 @@
 
                 </section>
 
-                <!--
-                    <h3>4 Responses</h3>
 
-                    <ol class="commentlist">
-
-                        <li class="depth-1">
-
-                            <div class="comment-info">
-                                <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                <cite>
-                                    <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                    <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                </cite>
-                            </div>
-
-                            <div class="comment-text">
-                                <p>Comments are great!</p>
-                            </div>
-
-                            <ul class="children">
-
-                                <li class="depth-2">
-
-                                    <div class="comment-info">
-                                        <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                        <cite>
-                                            <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                            <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                        </cite>
-                                    </div>
-
-                                    <div class="comment-text">
-                                        <p>And here is a threaded comment.</p>
-                                    </div>
-
-                                </li>
-
-                                <li class="depth-2">
-
-                                    <div class="comment-info">
-                                        <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                        <cite>
-                                            <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                            <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                        </cite>
-                                    </div>
-
-                                    <div class="comment-text">
-                                        <p>And here is another threaded comment.</p>
-                                    </div>
-
-                                    <ul class="children">
-
-                                        <li class="depth-3">
-
-                                            <div class="comment-info">
-                                                <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                                <cite>
-                                                    <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                                    <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                                </cite>
-                                            </div>
-
-                                            <div class="comment-text">
-                                                <p>Threaded comments are cool!</p>
-                                            </div>
-
-                                        </li>
-
-                                    </ul>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                        <li class="thread-alt depth-1">
-
-                            <div class="comment-info">
-                                <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                <cite>
-                                    <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                    <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                </cite>
-                            </div>
-
-                            <div class="comment-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero.
-                                    Suspendisse bibendum.
-                                </p>
-                            </div>
-
-                            <ul class="children">
-
-                                <li class="depth-2">
-
-                                    <div class="comment-info">
-                                        <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                        <cite>
-                                            <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                            <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                        </cite>
-                                    </div>
-
-                                    <div class="comment-text">
-                                        <p>Donec libero. Suspendisse bibendum.</p>
-                                    </div>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                        <li class="depth-1">
-
-                            <div class="comment-info">
-                                <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                <cite>
-                                    <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                    <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                </cite>
-                            </div>
-
-                            <div class="comment-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.
-                                    Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu
-                                    posuere nunc justo tempus leo.
-                                </p>
-                            </div>
-
-                            <ul class="children">
-
-                                <li class="depth-2">
-
-                                    <div class="comment-info">
-                                        <img height="54" width="54" class="avatar" src="images/gravatar.png" alt="">
-                                        <cite>
-                                            <strong><a class="author" href="#">John Doe</a></strong> | <a class="reply" href="#">Reply</a> </br>
-                                            <span class="comment-data">June 17, 2013 at 8:08 am</span>
-                                        </cite>
-                                    </div>
-
-                                    <div class="comment-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-                                    </div>
-
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                    </ol>
-
-
-                </section>
-
-                <section id="respond">
-
-                    <h3>Leave a Reply</h3>
-
-                    <form id="contactform" action="contact.php" method="post">
-
-                        <div>
-                            <p>Send me a message</p>
-                        </div>
-
-                        <div>
-                            <label>Name <span class="required">*</span></label>
-                            <input type="text" value="" id="name" name="name">
-                        </div>
-
-                        <div>
-                            <label>Email <span class="required">*</span></label>
-                            <input type="text" value="" id="email" name="email">
-                        </div>
-
-                        <div>
-                            <label>Website</label>
-                            <input type="text" value="" id="website" name="website">
-                        </div>
-
-                        <div>
-                            <label>Subject</label>
-                            <input type="text" value="" id="subject" name="subject">
-                        </div>
-
-                        <div>
-                            <label>Message <span class="required">*</span></label>
-                            <textarea id="message" cols="50" rows="20" name="message"></textarea>
-                        </div>
-
-                        <div>
-                            <input type="submit" class="button" value="Submit">
-                            <input type="reset" class="button" value="Reset">
-                        </div>
-
-                    </form>
-
-                </section>
-                -->
 
 
             </section> <!-- end main -->
