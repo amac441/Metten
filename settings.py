@@ -141,7 +141,7 @@ INSTALLED_APPS = (
     'disqus',
     'linkedin',
     'hitcount',
-    #'markdown_deux',
+    'rest_framework',
 )
 
 DISQUS_API_KEY = 'YK7u6669Om29L1vcuqlgRpGiN7boldpazrSEYbV6Rc0NOVWQtA16NXP63D6tW3PY'
@@ -151,6 +151,21 @@ HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 7 }
 HITCOUNT_HITS_PER_IP_LIMIT = 0
 HITCOUNT_EXCLUDE_USER_GROUP = ( 'Editor', )
 
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
