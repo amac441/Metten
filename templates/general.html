@@ -1,3 +1,6 @@
+
+<!-- App Dependent -->
+
 <!doctype html>
 <!--[if lt IE 7]> <html ng-app="Tipstry" class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ LANGUAGE_CODE }}"> <![endif]-->
 <!--[if IE 7]>    <html ng-app="Tipstry" class="no-js lt-ie9 lt-ie8" lang="{{ LANGUAGE_CODE }}"> <![endif]-->
@@ -25,7 +28,8 @@
 	<script src="{{ STATIC_URL }}js/libs/angular/angular.min.js"></script>
 	<script src="{{ STATIC_URL }}js/libs/angular/angular-resource.min.js"></script>
     <script src="{{ STATIC_URL }}js/libs/angular/angular-cookies.min.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/ui-bootstrap-tpls-0.3.0.min.js"></script>
+    
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script>
 
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/ng-mobile-menu.js"></script>
@@ -50,38 +54,37 @@
             <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
             <!-- put your page content in here -->
             <!-- Adding the ng-app declaration to initialize AngularJS -->
-
+            
             <div id="sp-nav" class="hide">
                 <nav >
                     <!-- When a link in the menu is clicked, we set the active variable -->
-                    <a href="#" class="home" >Home</a>
+                    <a href="#" class="home" >Interests</a>
+                    <a href="#/jobs" class="jobs">Jobs</a>
+                    <a href="#" class="calendar">Calendar</a>
+                    <a href="#" class="performance">Performance</a>
+                    <a href="#/add" class="add">Add Items</a>
                 </nav>
             </div>
 
             <div id="sp-page">
 
+                <div id="main">
+                    <!-- The navigation menu will get the value of the "active" variable as a class.
+            The $event.preventDefault() stops the page from jumping when a link is clicked. -->
 
-            <header class="container">
+                    <nav class="{[{active}]}" ng-click="$event.preventDefault()">
+
+                        <!-- When a link in the menu is clicked, we set the active variable -->
 
 
-                <hgroup>
-                    <h1><a href="/">metten tot wetten</a></h1>
-                    <h3>measuring to knowing </h3>
-                    {% if user.is_staff %}
-                    {% endif %}
-                </hgroup>
+                        <a href="#" class="home" ng-click="active='home'">Home</a>
+                        <a href="#" class="projects" ng-click="active='projects'">Projects</a>
+                        <a href="#" class="services" ng-click="active='services'">Services</a>
+                        <a href="#" class="contact" ng-click="active='contact'">Contact</a>
+                        <button ng-click="$spMenu.toggle()">Menu</button>
+                    </nav>
 
-                <nav id="nav-wrap" class="cf {[{ active }]}" ng-click="$event.preventDefault()">
-                    <!-- When a link in the menu is clicked, we set the active variable -->
-
-                    <li><a href="#" class="home" ng-click="active='home'">Home</a></li>
-                    <li><a href="#" class="projects" ng-click="active='projects'">Blog</a></li>
-                    <li><a href="#" class="services" ng-click="active='services'">Archives</a></li>
-                    <li><a href="#" class="contact" ng-click="active='contact'">5years</a></li>
-                    <button ng-click="$spMenu.toggle()">Menu</button>
-                </nav>
-
-            </header>
+                </div>
 
                 {% block site_wrapper %}{% endblock %}
 
@@ -90,3 +93,19 @@
 </body>
 
 </html>
+
+
+
+<!-- #need to update  4/14
+
+DONE 1. feed.html
+DONE 2. serializers
+DONE 3. adder controller and service
+DONE 4. app.js routes  (jobs, adder, profile stuff?)
+DONE 5. updates ALL of the scraper back end code
+5. urls to include new messages API
+DONE 6. view to include Adder views
+DONE 7. years model!  huge
+DONE 8. add gooser stuff 
+DONE 9. scraper module
+-->

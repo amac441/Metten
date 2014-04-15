@@ -1,49 +1,166 @@
 
 
-<div class="row">
-    <div class="span9 main">
+    <div class="span10 main">
         <!-- Declare a new AngularJS app and associate the controller -->
 
-
-
         <div>
-            <h2>Search Jobs</h2>
+            <h3>Search Interests</h3>
             <form class="well form-search">
-                <label>Search:</label>
-                <input type="text" ng-model="searched" class="input-medium search-query" placeholder="Keywords...">
-                <button type="submit" class="btn btn-success" ng-click="searchFor()">Search</button>
-                Try for example: "software engineer" or "mathemetician" or "artist"
-            </form>
-            <form class="well form-search" ng-repeat="searches in search" ng-click="toggleActive(searches)">
-                <li ng-class="{active:searches.active}">{[{searches.title}]}</li>
-            </form>
-        </div>
-
-        <div>
-            <h2>Search Events For</h2>
-            <form class="well form-search">
-                <label>Search:</label>
-                <input type="text" ng-model="stay_search" class="input-medium search-query" placeholder="Keywords...">
+                <input type="text" ng-model="stay_search" class="input-medium search-query" placeholder="Interests...">
                 <button type="submit" class="btn btn-success" ng-click="searchStay()">Search</button>
-                Try for example: "science" or "technology" or "art"
+                   &nbsp; &nbsp; For example: "science" or "technology" or "art"
             </form>
+        <div>
 
 
-            <form class="well form-search" ng-repeat="(site_name, dater) in daters">
-                <h3>{[{site_name}]} <a style="float:right;" ng-click="refreshSites(site_name)">Refresh</a></h3>
 
-                <ul>
-                    <li ng-class="{active:stay.active}" ng-repeat="(k2, stay) in dater" ng-click="toggleActive(stay)">{[{stay.title}]} <span style="float:right">{[{stay.date}]}</span></li>
-                </ul>
-            </form>
-        </div>
 
+        <!--<div ng-repeat "dater in daters">
+
+            {[{dater}]}
+        </div>-->
+
+    
+
+            <tabset>
+
+                <tab heading="Meetings">
+
+                    <form class="well form-search">
+                        <accordion close-others="oneAtATime">
+                            <accordion-group is-open="isopen">
+                                <accordion-heading>
+                                    <h3>Meetup</h3>
+                                </accordion-heading>
+
+
+                                <ul>
+                                    <li ng-class="{active:stay.active}" ng-repeat="(k2, stay) in daters_meet"</li>
+                                    <accordion close-others="oneAtATime">
+                                        <accordion-group is-open="isopen">
+                                            <accordion-heading>
+
+                                                <h3>{[{stay.title}]}</h3> <p>{[{stay.date}]}</p>
+
+                                            </accordion-heading>
+
+
+                                            {[{stay.desc}]}
+                                            <b>Length: </b>  {[{stay.length}]}
+                                            <a href="{[{stay.url}]}">Check Out the Site</a>
+                                            <a style="float:right;" ng-click="toggleActive(stay)">Save This</a>
+                                        </accordion-group>
+                                    </accordion>
+
+                                </ul>
+
+                            </accordion-group>
+                        </accordion>
+
+                    </form>
+
+
+                    <form class="well form-search">
+                        <accordion close-others="oneAtATime">
+                            <accordion-group is-open="isopen">
+                                <accordion-heading>
+                                    <h3>UNL</h3>
+                                </accordion-heading>
+
+
+                                <ul>
+                                    <li ng-class="{active:stay.active}" ng-repeat="(k2, stay) in daters_unl"</li>
+                                    <accordion close-others="oneAtATime">
+                                        <accordion-group is-open="isopen">
+                                            <accordion-heading>
+
+                                                <h3>{[{stay.title}]}</h3> <p>{[{stay.date}]}</p>
+
+                                            </accordion-heading>
+
+
+                                            {[{stay.desc}]}
+                                            <b>Length: </b>  {[{stay.length}]}
+                                            <a href="{[{stay.url}]}">Check Out the Site</a>
+                                            <a style="float:right;" ng-click="toggleActive(stay)">Save This</a>
+                                        </accordion-group>
+                                    </accordion>
+
+                                </ul>
+
+                            </accordion-group>
+                        </accordion>
+
+                    </form>
+                    
+                </tab>
+
+
+                <tab heading="People">
+                    {[{daters_linked}]}
+
+                </tab>
+                <tab heading="Courses">
+                    {[{daters_coursera}]}
+
+                </tab>
+
+                <tab heading="Content">
+                    {[{daters_alltop}]}
+                    {[{daters_amazon}]}
+                    {[{daters_tunes}]}
+
+
+                </tab>
+
+            </tabset>
+
+            <hr />
+
+
+                <form class="well form-search" ng-repeat="(site_name, dater) in daters">
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="isopen">
+                            <accordion-heading>
+                                <h3>{[{site_name}]}</h3>
+                            </accordion-heading>
+
+
+                            <ul>
+                                <li ng-class="{active:stay.active}" ng-repeat="(k2, stay) in dater"</li>
+                                <accordion close-others="oneAtATime">
+                                    <accordion-group is-open="isopen">
+                                        <accordion-heading>
+
+                                            <h3>{[{stay.title}]}</h3> <p>{[{stay.date}]}</p>
+
+                                        </accordion-heading>
+
+
+                                        {[{stay.desc}]}
+                                        <b>Length: </b>  {[{stay.length}]}
+                                        <a href="{[{stay.url}]}">Check Out the Site</a>
+                                        <a style="float:right;" ng-click="toggleActive(stay)">Save This</a>
+                                    </accordion-group>
+                                </accordion>
+
+                            </ul>
+
+                        </accordion-group>
+                    </accordion>
+
+                </form>
+</div>
+
+
+
+        
 
         <!--      Modal Popup       -->
         <div class="row">
             <div class="span9">
-                <a ng-show="globals.is_authenticated" class="btn" ng-click="open('create')"> Create</a>
-                <a ng-hide="globals.is_authenticated" class="btn" href="/api-auth/login/"> Create</a>
+                <!--<a ng-show="globals.is_authenticated" class="btn" ng-click="open('create')"> Create</a>
+                <a ng-hide="globals.is_authenticated" class="btn" href="/api-auth/login/"> Create</a>-->
 
                 <div modal="postModalCreate" close="close('create')" options="opts">
                     <a ng-click="close('create')" class="close" data-dismiss="modal">×</a>
@@ -98,7 +215,7 @@
                 </div>
             </div>
         </div>
-
+      
 
 
 </div>

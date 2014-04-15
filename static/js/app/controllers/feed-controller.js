@@ -22,28 +22,65 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
         )
     };
 
+
+   // ------------TABBING----------------- //
+
+
+    $scope.tabs = 
+    [
+    { title:"Dynamic Title 1", content:"Dynamic content 1" },
+    { title:"Dynamic Title 2", content:"Dynamic content 2"}
+    ];
+
+
+    // -------- MISC -------------------
+
+    $scope.toggleActive = function (s) {
+        s.active = !s.active;
+    };
+
+    // need to refactor all of these
+
+    $scope.oneAtATime = false;
+
+
+    // --------- JOB SEARCH -----------
+
+    $scope.searchFor = function () {
+        SearchService.get_jobs($scope.searched).then(function (data) {
+            $scope.search = data;
+        }
+        )
+    };
+
+
+    // -------- SITE SEARCHES ----------
+
     $scope.searchStay = function () {
 
-        // eventually this will come from the back end!
-        var sites = [
-            'UNL', 'Amazon', 'Alltop',
-            'Meetup', 'Coursera',
-            'ItunesU', 'LinkedIn']
-            // 'Indeed', 
+
+            var sites = [
+            'LinkedIn', 'UNL', 'Meetup', 'Alltop', 'ItunesU', 'Amazon', 'Coursera'
+             ]
 
         var range = [];
         for (var x in sites) {
 
             SearchService.get_stay($scope.stay_search, sites[x]).then(function (data) {
 
-               for (key in data) {
-                       $scope.stays = data[key];
-                       $scope.daters = data;
-               }
+            $scope.daters_meet = data['Meetup'];
+            $scope.daters_unl = data['UNL'];
+            $scope.daters_linked = data['LinkedIn'];
+            $scope.daters_alltop = data['Alltop'];
+            $scope.daters_tunes = data['ItunesU'];
+            $scope.daters_amazon = data['Amazon'];
+            $scope.daters_coursera = data['Coursera'];
+          
                 
             }
          )
         }
+
     };
 
     $scope.refreshSites = function (s) {
@@ -57,7 +94,7 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
 
         }
      )
-     };
+    };
 });
 
 

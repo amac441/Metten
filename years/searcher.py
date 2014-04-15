@@ -13,15 +13,15 @@ from linkedin import linkedin
 import amazonproduct
 
 
-#site	title	desc	url	author	location	length	date
-#alltop	title	need desc	url	TBD	N/A	length?	need date?
-#amazon	title	need desc	need url	author	N/A	length?	pub date?
-#coursera	title	need desc	url (change name)	N/A	N/A	length	date
-#indeed	title	need desc	need url	company(change)	location(change)	sal(as length)	N/A
-#itunes	change(trackName)	change(genres)	change (trackViewUrl)	change(collectionName)		TBD	change(release-date)
-#linkedin	change(name)	change(??)	url	N/A	change(location)	sal(as length)	TBD
-#meetup	title	description	url	N/A	change(location)	need end time	date
-#unl	title	change(descriptions)	need url	N/A	change(location)	need end time	date (and time)
+#site   title   desc    url author  location    length  date
+#alltop title   need desc   url TBD N/A length? need date?
+#amazon title   need desc   need url    author  N/A length? pub date?
+#coursera   title   need desc   url (change name)   N/A N/A length  date
+#indeed title   need desc   need url    company(change) location(change)    sal(as length)  N/A
+#itunes change(trackName)   change(genres)  change (trackViewUrl)   change(collectionName)      TBD change(release-date)
+#linkedin   change(name)    change(??)  url N/A change(location)    sal(as length)  TBD
+#meetup title   description url N/A change(location)    need end time   date
+#unl    title   change(descriptions)    need url    N/A change(location)    need end time   date (and time)
 
 
 
@@ -40,7 +40,7 @@ def flatten(lst):
 
 
 class Alltop(object):
-    # need to add code to determine which URL to hit.
+    # need to add code to determine which URL to hit. 
     URL = 'http://database.alltop.com/'
     #URL = newFunction(object):
 
@@ -65,63 +65,71 @@ class Alltop(object):
                     'url': hr,
                     'desc': desc,
                     'date': date,
-                    'author': site,
-                    'content_type' : 'article',
-                    'time_sensetive': 'no'
-
+                    'author': site
                 })
         return results
 
 
 # --------- AMAZON -----------------------------
 
-# class Amazon():
-#     ACCESS_KEY = 'AKIAIAW7JXESRBCM2BLA'
-#     SECRET_KEY = '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'
-#     ASSOCIATE_TAG = '4319-1549-2008'
-
-#     @staticmethod
-#     def get_results(job_title):
-#         api = amazonproduct.API(access_key_id=Amazon.ACCESS_KEY, secret_access_key=Amazon.SECRET_KEY,associate_tag=Amazon.ASSOCIATE_TAG, locale='us')
-#         items = api.item_search('Books', Keywords=job_title)
-#         results = []
-#         for item in items[0:5]:
-#             try:
-#                 tite = str(item.ItemAttributes.Title)
-#                 author = str(item.ItemAttributes.Author)
-#                 results.append({
-#                                 'author': author,
-#                                 'title': tite
-#                                 })
-#             #Some rows don't have the author or title attributes
-#             except AttributeError:
-#                 pass
-#         return results
-
-
 class Amazon():
-    ACCESS_KEY = 'AKIAIAW7JXESRBCM2BLA'
-    SECRET_KEY = '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'
-    ASSOCIATE_TAG = '4319-1549-2008'
+    
 
     @staticmethod
     def get_results(job_title):
-        api = amazonproduct.API(access_key_id=Amazon.ACCESS_KEY, secret_access_key=Amazon.SECRET_KEY,associate_tag=Amazon.ASSOCIATE_TAG, locale='us')
+    
+        config = {
+        'access_key' : 'AKIAIAW7JXESRBCM2BLA',
+        'secret_key' : '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',
+        'associate_tag' : '4319-1549-2008',
+        'locale' : 'us'
+        }
+        api = amazonproduct.API(cfg=config)
+        #amazonproduct.API(access_key_id=Amazon.ACCESS_KEY, secret_access_key=Amazon.SECRET_KEY,associate_tag=Amazon.ASSOCIATE_TAG, locale='us')
         items = api.item_search('Books', Keywords=job_title)
         results = []
-        for item in items[0:5]:
-            try:
-                tite = item.ItemAttributes.Title
-                author = item.ItemAttributes.Author
-                results.append({
-                                'author': author,
-                                'title': tite
-                                })
-            #Some rows don't have the author or title attributes
-            except AttributeError:
-                pass
-        return results
 
+        #price = api.item_lookup('B00008OE6I', ResponseGroup='OfferFull', Condition='All')
+
+        for x, item in enumerate(items):
+            #try:
+        
+            try:
+                ansi = str(item.ASIN)
+                offer = api.item_lookup(ansi, ResponseGroup='OfferFull', Condition='All')
+                price = str(offer.Items.Item.Offers.Offer.OfferListing.Price.FormattedPrice)
+                a=1
+            except:
+                price = "Price Unkown"
+
+                title = str(item.ItemAttributes.Title)
+                author = str(item.ItemAttributes.Author)
+                url = str(item.DetailPageURL)
+                
+                results.append({'author': author, 
+                             'title': title,
+                             'url': url,
+                             'description':price
+                             }
+                )
+            if x == 5:
+                break
+
+            #For Price:
+            #<Items>
+            #...
+            #<Item>
+            #...
+            #<Offers>
+            #    ...
+            #    <Offer>
+            #        ...
+            #        <OfferListing>
+
+            #Some rows don't have the author or title attributes
+            #except AttributeError:
+            #    pass
+        return results
 
 # ------- COURSERA --------------------------------
 
@@ -135,7 +143,9 @@ class Coursera(object):
         results = []
         for item in searched_items:
             session_ids = [session_id for session_id in item['links']['sessions']]
-            url = Coursera.SESSION_URL % (','.join(map(str, session_ids)))
+            session_id = session_ids[0]
+            session_id = str(session_id)
+            url = Coursera.SESSION_URL % (''.join(session_id))
             sessions_json = get_json(url)['elements']
             for session_json in sessions_json:
                 try:
@@ -143,10 +153,18 @@ class Coursera(object):
                                            int(session_json['startDay']))
                 except KeyError:
                     course_date = datetime(10, 1, 1, 1, 1, 1)  #some rows don't specify dates, ignore those
+                #if datetime.today() < course_date:
                 if datetime.today() < course_date:
-                    results.append({'title': item['name'], 'length': session_json['durationString'],
-                                    'url': session_json['homeLink'],
-                                    'date': course_date})     #'desc':session_json['shortDescription']
+                    start_date = course_date
+                else:
+                    start_date = ''
+                results.append({'title': item['name'], 
+                                'length': session_json['durationString'],
+                                'url': session_json['homeLink'],
+                                'date': course_date,
+                                'start_date':start_date,
+                                'description': str(session_ids)
+                                                               })     #'desc':session_json['shortDescription']
 
         return results
 
@@ -179,7 +197,7 @@ class ItunesU(object):
         results = []
         for row in json['results'][0:5]:
             results.append({'title': row['trackName'], 'desc':row['genres'], 'url':row['trackViewUrl'],
-                        'author': row['collectionName'],
+                        'author': row['collectionName'],                          
                         'date': row['releaseDate'] } )
 
         return results
@@ -193,32 +211,56 @@ class ItunesU(object):
 #        results = []
 #        url = ItunesPodcasts.URL % quote(job_title)
 #        results.append({'title': item['trackName'], 'desc':session_json['genres'], 'url':session_json['trackViewUrl'],
-#                        'author': session_json['collectionName'], 'length': session_json['durationString'],
+#                        'author': session_json['collectionName'], 'length': session_json['durationString'],                         
 #                        'date': session_json['releaseDate'] } )
-
+        
 #        return results
 
 # -------- LINKEDIN --------------------------------
 
-class LinkedIn(object):
-    API_KEY = '75i3mk2maw6ogl'
-    SECRET_KEY = 'MDasUmDtjPbYa1I9'
-    USER_TOKEN = '6b759135-60ec-4885-81e3-8bc025ac3591'
-    USER_SECRET = '344b6e0c-0a22-4896-baaa-9457ffdb621c'
-    RETURN_URL = ''
+class LinkedInner(object):
 
     @staticmethod
-    def get_results(job_title, zip_code, country_code):
-        authentication = linkedin.LinkedInDeveloperAuthentication(LinkedIn.API_KEY, LinkedIn.SECRET_KEY,
-                                                                  LinkedIn.USER_TOKEN, LinkedIn.USER_SECRET,
-                                                                  LinkedIn.RETURN_URL,
-                                                                  linkedin.PERMISSIONS.enums.values())
-        application = linkedin.LinkedInApplication(authentication)
-        selectors = [{'people': ['first-name', 'last-name', 'headline']}]
-        params = {'keywords': job_title, 'postal-code': zip_code, 'country-code': country_code}
-        results = application.search_profile(selectors=selectors, params=params)
-        return results
+    def get_results(job_title, zip_code):
 
+        API_KEY = '75i3mk2maw6ogl'
+        SECRET_KEY = 'MDasUmDtjPbYa1I9'
+        USER_TOKEN = '8faba2a7-e3a6-4727-b06b-a291ebbf8032'
+        USER_SECRET = '99fde265-7fd3-4d53-8eb8-d0f6f979388c'
+        RETURN_URL = ''
+
+        authentication = linkedin.LinkedInDeveloperAuthentication(API_KEY, SECRET_KEY,
+                                                                    USER_TOKEN, USER_SECRET,
+                                                                    RETURN_URL,
+                                                                    linkedin.PERMISSIONS.enums.values())
+
+
+        application = linkedin.LinkedInApplication(authentication)
+        selectors = [{'people': ['first-name', 'last-name', 'headline', 'picture-url', 'public-profile-url']}]
+        params = {'keywords': job_title, 'postal-code': zip_code, 'country-code': 'us'}
+        linked = application.search_profile(selectors=selectors, params=params)
+    
+        links = linked['people']['values']
+
+        results = []
+        #application = linkedin.LinkedInApplication(authentication)
+        #results = application.search_profile(selectors=[{'people': ['first-name', 'last-name', 'headline']}], params={'keywords': job_title})
+        #res = application.search_profile(selectors=[{'people': ['first-name', 'last-name']}], params={'keywords': 'Analyst'})
+        #print linkedin.LinkedInApplication.search_profile.url
+        #results = application.search_job(selectors=[{'jobs': ['id', 'customer-job-code', 'posting-date']}], params={'title': 'python', 'count': 2})
+
+        for link in links:
+            try:
+                results.append({
+            
+                    'title' : link['firstName'] + " " + link['lastName'],
+                    'desc' : link['headline'],
+                    'image' : link['pictureUrl'],
+                    'url' : link['publicProfileUrl']
+                        })
+            except:
+                 a=1
+        return results
 
 
 # ---------- MEETUP -------------------
@@ -270,7 +312,7 @@ class Meetup():
         for result in json['results']:
             cleaned_epoch = (result['time'] + result['utc_offset']) / 1000
             formatted_date = datetime.utcfromtimestamp(cleaned_epoch)
-
+            
             try:
                 if result['venue']:
                     venue = result['venue']
@@ -280,7 +322,7 @@ class Meetup():
                     group = result['group']
                 else:
                     group = ""
-
+            
                 single_res = {'description': result['description'], 'title': result['name'],
                               'date': formatted_date, 'url': result['event_url'],
                               'location':venue['city'], 'author':group['name']
@@ -288,12 +330,12 @@ class Meetup():
                 results.append(single_res)
             except:
                  a = 1
-
+        
     #    return results
-
+    
     #@staticmethod
-    #def get_group_event(split_job_title, radius, zip_code):
-
+    #def get_group_event(split_job_title, radius, zip_code):      
+         
         url2 = Meetup.GROUPS % (zip_code, topic, radius, Meetup.API_KEY)
         json2 = get_json(url2)
         results = []
@@ -301,19 +343,19 @@ class Meetup():
             group = res['category']
 
             try:
-                single_res = res['next_event']
-
+                single_res = res['next_event']           
+            
                 time = single_res['time']
                 cleaned_epoch = (time - 18000000) / 1000
-
+            
                 rezults = {
                 'date' : datetime.utcfromtimestamp(cleaned_epoch),
                 'location' : res['city'],
                 'desc' : res['description'],
-                'url' : res['link'],
+                'url' : res['link'],           
                 'author' : res['name'],
                 'title' : single_res['name']}
-
+            
                 results.append(rezults)
             except:
                 a=1
@@ -393,7 +435,9 @@ class ScraperThread(Thread):
 
     def run(self):
         try:
-            if self.site != Meetup:
+            if self.site_name == "LinkedIn":
+                site_result = self.site.get_results(self.job_title, self.zip_code)
+            elif (self.site != Meetup):
                 site_result = self.site.get_results(self.job_title)
             else:
                 site_result = self.site.get_results(self.job_title, self.radius, self.zip_code)
@@ -415,11 +459,15 @@ class SearchClass():
 
 
     def scrape_sites(self, siter, job_title, radius, zip_code):
+        
+        #result = {}
 
-        sites = {'UNL': ['UNL', UNL], 'Amazon':['Amazon', Amazon], 'Alltop':['Alltop', Alltop],
-            'Meetup':['Meetup', Meetup], 'Indeed':['Indeed', Indeed], 'Coursera':['Coursera', Coursera],
-            'ItunesU':['ItunesU', ItunesU], 'LinkedIn':['LinkedIn', LinkedIn]}
+        sites = {'UNL': ['UNL', UNL], 'Amazon':['Amazon', Amazon], 'Alltop':['Alltop', Alltop], 
+            'Meetup':['Meetup', Meetup], 'Coursera':['Coursera', Coursera],
+            'ItunesU':['ItunesU', ItunesU], 'LinkedIn':['LinkedIn', LinkedInner]}
 
+        #'Indeed':['Indeed', Indeed], 
+       
         site_name = sites[siter][0]
 
         site = sites[siter][1]
@@ -440,13 +488,13 @@ class SearchClass():
 
 
         #def scrape_sites(self, siter, job_title, radius, zip_code):
-        #sites = {'unl': ['UNL', UNL], 'amazon':['Amazon', Amazon], 'alltop':['Alltop', Alltop],
+        #sites = {'unl': ['UNL', UNL], 'amazon':['Amazon', Amazon], 'alltop':['Alltop', Alltop], 
         #    'meeetup':['Meetup', Meetup], 'indeed':['Indeed', Indeed], 'coursera':['Coursera', Coursera],
         #    'itunes':['ItunesU', ItunesU], 'linked':['LinkedIn', LinkedIn]}
-
+       
         #site_name = sites[siter][0]
         #site = sites[siter][1]
-
+       
         #site_result = ScraperThread(site_name, site, job_title, radius, zip_code)
 
         #result[site_name] = site_result

@@ -14,6 +14,8 @@ from rest_framework import status
 from searcher import SearchClass
 from django.http import HttpResponse
 from django.conf import settings
+from Metten.years.models import Adder
+from Metten.years.serializers import AdderSerializer
 
 
 #@api_view(['GET', 'POST'])
@@ -57,20 +59,29 @@ class SearchStay(APIView):
 #http://www.mettentot.com/years/api/messages/
 class EmailIn(APIView):
     def post(self, request):
+
+         a = Adder()
+         user = request.user
+
          if request.method == 'POST':
+             
+             #request.POST = data
+             data = {
+             'sender' : 'bob@mettentot.com',
+             'recipient' : 'loggit@mettentot.com',
+             'subject' : 'done',
+             'body-plain' : 'http://www.businessinsider.com/inside-story-of-clinkle-2014-4'
+             }
 
-             sender    = request.POST.get('sender')
-             recipient = request.POST.get('recipient')
-             subject   = request.POST.get('subject', '')
 
-             body_plain = request.POST.get('body-plain', '')
-             body_without_quotes = request.POST.get('stripped-text', '')
-
-             #writing to a file for debugging purposes
-             path1 = settings.MEDIA_ROOT
-             filename = path1 + '/11data.txt'
-             file = open(filename, 'w+')
-             file.write(sender + recipient + subject + body_plain + body_without_quotes)
+             response = a.email_in(data, user)
+             
+             #------ THIS BREAK OUT WILL GO IN THE MODEL -----
+             #sender    = request.POST.get('sender')
+             #recipient = request.POST.get('recipient')
+             #subject   = request.POST.get('subject', '')
+             #body_plain = request.POST.get('body-plain', '')
+             #body_without_quotes = request.POST.get('stripped-text', '')
              # note: other MIME headers are also posted here...
 
              # attachments:
@@ -80,4 +91,15 @@ class EmailIn(APIView):
 
          # Returned text is ignored but HTTP status code matters:
          # Mailgun wants to see 2xx, otherwise it will make another attempt in 5 minutes
-         return HttpResponse('OK')
+         return HttpResponse(response)
+
+class AdderList(generics.ListCreateAPIView):
+    """
+    List all boards, or create a new board.
+    """
+    model = Adder
+    serializer_class = AdderSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def pre_save(self, obj):
+        obj.user = self.request.user

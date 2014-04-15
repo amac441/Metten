@@ -15,21 +15,30 @@ years.config(function ($routeProvider) {
         .when("/", {
             templateUrl: "../static/js/app/views/feed.html",
             controller: "FeedController",
-            // resolve: {
-            //     posts: function (PostService) {
-            //         return PostService.list();
-            //     }
+
         })
-        // .when("/post/:id", {
-        //     templateUrl: "static/js/app/views/view.html",
-        //     controller: "PostController",
-        //     resolve: {
-        //         post: function ($route, PostService) {
-        //             var postId = $route.current.params.id
-        //             return PostService.get(postId);
-        //         }
-        //     }
-        // })
+
+        .when("/jobs", {
+            templateUrl: "../static/js/app/views/jobs.html",
+            controller: "FeedController",
+            // resolve: {
+            //         posts: function (PostService) {
+            //         return PostService.list();  }
+            // }
+        })
+
+
+        .when("/add", {
+                    templateUrl: "../static/js/app/views/add_items.html",
+                    controller: "AdderController",
+                    resolve: {
+                        adder: function (AdderService) {
+                            return AdderService.list();
+                        }
+                    }
+                })
+
+
 
         .otherwise({
             redirectTo: '/'

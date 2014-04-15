@@ -138,16 +138,18 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     #'taggit',
     'Metten.blog',
+    'Metten.years',
     'disqus',
     'linkedin',
     'hitcount',
     'rest_framework',
+    'goose',
 )
 
 DISQUS_API_KEY = 'YK7u6669Om29L1vcuqlgRpGiN7boldpazrSEYbV6Rc0NOVWQtA16NXP63D6tW3PY'
 DISQUS_WEBSITE_SHORTNAME = 'mettentot'
 
-HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 7 }
+HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 1 }
 HITCOUNT_HITS_PER_IP_LIMIT = 0
 HITCOUNT_EXCLUDE_USER_GROUP = ( 'Editor', )
 
