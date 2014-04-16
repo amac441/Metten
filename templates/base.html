@@ -4,6 +4,9 @@
 <!--[if (gte IE 8)|!(IE)]><!-->
 
  <!--<![endif]-->
+ {% load ganalytics %}
+
+
 <head>
 
     <!--- Basic Page Needs
@@ -21,8 +24,10 @@
 
 
     <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    {% ganalytics %}
+
     {% block head %}
     {% endblock %}
 
@@ -52,18 +57,17 @@
                     href="/blog">Blog</a></li>
                     <li {% if archive_list %} class="current" {% endif %}><a
                     href="/blog/archives">Archives</a></li>
-
-                    <!--
+                    <li><a href="/metten">About</a></li>
                     <li>
-                        <a href="#">Dropdown</a>
+                        <a href="5years">5years +</a>
                         <ul>
-                            <li><a href="#"><span>- </span>Submenu 01</a></li>
-                            <li><a href="#"><span>- </span>Submenu 02</a></li>
-                            <li><a href="#"><span>- </span>Submenu 03</a></li>
+                            <li><a href="5years"><span>- </span>Interests</a></li>
+                            <li><a href="5years/#/jobs"><span>- </span>Jobs</a></li>
+                            <li><a href="5years/#/calendar"><span>- </span>Calendar</a></li>
+                            <li><a href="5years/#/add"><span>- </span>Add Items</a></li>
                         </ul>
                     </li>
-                    <li><a href="/about">About</a></li>
-                    -->
+
 
                 </ul> <!-- end #menu -->
 

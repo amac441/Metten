@@ -7,7 +7,7 @@ from django.contrib import auth
 from django.views.generic.list_detail import object_detail
 from hitcount.views import update_hit_count_ajax
 from rest_framework.urlpatterns import format_suffix_patterns
-from django.conf.urls import url
+
 
 
 admin.autodiscover()
