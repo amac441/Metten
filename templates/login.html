@@ -8,12 +8,18 @@
 		<p class = "text-warning">UN and PW didnt match</p>
 		{% endif %}
 
-		<!-- the action here needs to be changed -->
-		<form role="form" class="form-horizontal" method="post" action="{% url django.contrib.auth.views.login %}">
+		 <!--the action here needs to be changed -->
+		 <form action='/auth' method='POST'>
 			{% csrf_token %}
-			{{form}}
+			<!--{{form}}-->
+			<label for="username">Username</label>
+			<input type="text" name="username" value ="" id="username">
+			<label for="password">Password</label>
+			<input type="password" name="password" value ="" id="password">
+
+
 			<input class="btn btn-primary" type="submit" value="Login" />
-			<input type="hidden" name="next" value="{{ next }}" />
+			<!--<input type="hidden" name="next" value="{{ next }}" />-->
 		</form>
 	</body>
 

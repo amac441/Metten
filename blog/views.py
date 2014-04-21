@@ -13,8 +13,9 @@ from django.views.decorators.cache import never_cache
 
 
 def index(request):
-	user = authenticate(username='buddy', password='garity')
-	login(request, user)
+    # user = authenticate(username='buddy', password='garity')
+	#user = authenticate()
+	#login(request, user)
 	if request.method == 'POST':
 
 		if 'job_search' in request.POST:

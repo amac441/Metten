@@ -26,7 +26,7 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
    // ------------TABBING----------------- //
 
 
-    $scope.tabs = 
+    $scope.tabs =
     [
     { title:"Dynamic Title 1", content:"Dynamic content 1" },
     { title:"Dynamic Title 2", content:"Dynamic content 2"}
@@ -68,6 +68,7 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
 
             SearchService.get_stay($scope.stay_search, sites[x]).then(function (data) {
 
+            $scope.b = 'a'
             $scope.daters_meet = data['Meetup'];
             $scope.daters_unl = data['UNL'];
             $scope.daters_linked = data['LinkedIn'];
@@ -75,8 +76,8 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
             $scope.daters_tunes = data['ItunesU'];
             $scope.daters_amazon = data['Amazon'];
             $scope.daters_coursera = data['Coursera'];
-          
-                
+
+
             }
          )
         }
@@ -95,7 +96,7 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
         }
      )
     };
-});
+
 
 
 //<form class="well form-search" >
@@ -104,3 +105,33 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
 //        <li ng-class="{active:stay.active}" ng-repeat="(key,stay) in stays" ng-click="toggleActive(stay)">{[{stay}]}</li>
 //    </ul>
 //</form>
+
+
+//  ------- Carosel Stuff ---------
+
+  $scope.myInterval = 5000;
+  var slides = $scope.slides = [];
+  $scope.addSlide = function() {
+    var newWidth = 600 + slides.length;
+    slides.push({
+
+        // image: '../static/img/charts/bar_chart.jpg'
+        // // image: '../static/img/charts/bubble.jpg'
+        image: "../static/img/charts/sankey.PNG"
+
+    //   image: 'http://placekitten.com/' + newWidth + '/300',
+    //   text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
+    //     ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
+    },
+    {
+        image: "../static/img/charts/bubble.JPG"
+    },
+    {
+        image: "../static/img/charts/bar_chart.JPG"
+    });
+  };
+  for (var i=0; i<4; i++) {
+    $scope.addSlide();
+  }
+
+});

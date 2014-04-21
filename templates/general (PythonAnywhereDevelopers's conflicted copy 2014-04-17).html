@@ -3,7 +3,6 @@
 {% load ganalytics %}
 
 
-
 <!doctype html>
 <!--[if lt IE 7]> <html ng-app="Tipstry" class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ LANGUAGE_CODE }}"> <![endif]-->
 <!--[if IE 7]>    <html ng-app="Tipstry" class="no-js lt-ie9 lt-ie8" lang="{{ LANGUAGE_CODE }}"> <![endif]-->
@@ -103,17 +102,16 @@
                                 <!--<a href="http://angularjs.org/">link</a>-->
                             </li>
                             <li>
-                                <a href="/blog" class="blog" target="_self">Blog</a>
+                                <a ng-href="/blog" class="blog" target="_self">Blog</a>
                             </li>
 
-
-                            <li>
+                                                        <li>
                                 {% if user.is_authenticated %}
                                 <a href = "/logout" target="_self">Logout</a>
                                 {% else %}
                                 <a href = "/login" target="_self">Login</a>
                                 {% endif %}
-                            </li>    
+                            </li>
                                 <!--<a href="5years" class="years" target="_self">5years +</a>
                                 <ul>
                                     <li><a href="5years"><span>- </span>Interests</a></li>

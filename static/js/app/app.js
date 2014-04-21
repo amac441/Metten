@@ -27,6 +27,15 @@ years.config(function ($routeProvider) {
             // }
         })
 
+        .when("/performance", {
+            templateUrl: "../static/js/app/views/performance.html",
+            controller: "FeedController",
+            // resolve: {
+            //         posts: function (PostService) {
+            //         return PostService.list();  }
+            // }
+        })
+
         .when("/calendar", {
             templateUrl: "../static/js/app/views/calendar.html",
             controller: "FeedController",

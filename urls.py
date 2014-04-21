@@ -20,23 +20,37 @@ urlpatterns = patterns('',
     url(r'^graph$', 'Metten.blog.views.graph', name='graph'),
     url(r'^linker$', 'Metten.blog.views.linker', name='linker'),
     url(r'^blog/', include('Metten.blog.urls')),
-    url(r'^5years/', include('Metten.years.urls'))
+    url(r'^5years/', include('Metten.years.urls'), name='5years_home')
 )
 
-urlpatterns += patterns(
-	'django.contrib.auth.views',
+urlpatterns += patterns('',
 
-	url(r'^login/$', 'login',  #this is django.contrib.views.login
-		{'template_name': 'login.html'},
-		name='5years_login'),
 
-	url(r'^logout/$', 'logout',  #this is django.contrib.views.logout
-		{'next_page': '/'},
-		name='5years_logout'),
+    # url(r'^login/$', 'login',  #this is django.contrib.auth.views.login
+    #   {'template_name': 'login.html'},
+    #   name='5years_login'),
+
+    url(r'^login$', 'Metten.views.login'),
+    url(r'^auth$', 'Metten.views.auth_view'),
+    url(r'^logout$', 'Metten.views.logout'),
+    url(r'^loggedin$', 'Metten.views.loggedin'),
+    url(r'^invalid$', 'Metten.views.invalid_login'),
+    url(r'^register$', 'Metten.views.register_user'),
+    # url(r'^register_success$', 'Metten.views.register_success'),
 
 	url(r'^survey$', direct_to_template, {'template': 'survey.html'}),
 
 	url(r'^metten$', direct_to_template, {'template': 'metten.html'}),
+
+
+    # 'django.contrib.auth.views',
+
+
+
+    # url(r'^logout/$', 'logout',  #this is django.contrib.auth.views.logout
+    #   {'next_page': '5years_home'},
+    #   name='5years_logout'),
+
 
     # #static
     # (r'^static/(?P<path>.*)$', 'django.views.static.serve',
