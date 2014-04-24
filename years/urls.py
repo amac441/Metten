@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^api/search[/]?$', views.SearchRest.as_view(), name="search_rest"),
     url(r'^api/stay/(?P<job>.+)/(?P<site>.+)[/]?$', views.SearchStay.as_view(), name="search_stay"),
     url(r'^api/messages/', views.EmailIn.as_view(), name="email_in"),
+    url(r'^api/adder/(?P<pk>[0-9]+)/$', views.AdderAdd.as_view(), name='adder-add'),
     url(r'^api/adder/', views.AdderList.as_view(), name="adder"),
 
 

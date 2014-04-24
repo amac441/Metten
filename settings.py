@@ -115,6 +115,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',   #helps with authentication
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'Metten.urls'
@@ -144,6 +145,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'goose',
     'ganalytics',
+    'debug_toolbar'
 )
 
 DISQUS_API_KEY = 'YK7u6669Om29L1vcuqlgRpGiN7boldpazrSEYbV6Rc0NOVWQtA16NXP63D6tW3PY'

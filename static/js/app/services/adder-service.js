@@ -1,5 +1,5 @@
-﻿years.factory('AdderService', function ($http, $q) {
-    
+years.factory('AdderService', function ($http, $q) {
+
     var api_url = "/5years/api/adder/";
 
     return {
@@ -26,43 +26,44 @@
             return defer.promise;
         },
 
-        add_items: function (sender, recipient, subject, details) {
-            // var url = add_url + sender + "/" + site;
-            // var defer = $q.defer();
-            // $http({ method: 'GET', url: url }).
-            //     success(function (data, status, headers, config) {
-            //         defer.resolve(data);
-            //     })
-            //     .error(function (data, status, headers, config) {
-            //         defer.reject(status);
-            //     });
-            // return defer.promise;
+        update: function (adder) {
+            if (adder.id == '') {
+                var url = api_url;
+                var defer = $q.defer();
+                $http({
+                    method: 'PUT',
+                    url: url,
+                    data: adder
+                }).
+                    success(function (data, status, headers, config) {
+                        defer.resolve(data);
+                    }).error(function (data, status, headers, config) {
+                        defer.reject(status);
+                    });
+                return defer.promise;
+            }
+            else
+            {
+                var url = api_url + adder.id + "/";
+                var defer = $q.defer();
+                adder.id = '';
+                $http({
+                    method: 'DELETE',
+                    url: url,
+                    data: adder
+                }).
+                    success(function (data, status, headers, config) {
+                        defer.resolve(data);
+                    }).error(function (data, status, headers, config) {
+                        defer.reject(status);
+                    });
+                return defer.promise;
+
+
+            }
+
+            // call this from the toggle active deal in the feed controller
         },
-        //update: function (post) {
-        //    var url = api_url + post.id + "/";
-        //    var defer = $q.defer();
-        //    $http({method: 'PUT',
-        //        url: url,
-        //        data: post}).
-        //        success(function (data, status, headers, config) {
-        //            defer.resolve(data);
-        //        }).error(function (data, status, headers, config) {
-        //            defer.reject(status);
-        //        });
-        //    return defer.promise;
-        //},
-        //save: function (post) {
-        //    var url = api_url;
-        //    var defer = $q.defer();
-        //    $http({method: 'POST',
-        //        url: url,
-        //        data: post}).
-        //        success(function (data, status, headers, config) {
-        //            defer.resolve(data);
-        //        }).error(function (data, status, headers, config) {
-        //            defer.reject(status);
-        //        });
-        //    return defer.promise;
-        //},
-    }
+
+    };
 });

@@ -37,9 +37,7 @@ urlpatterns += patterns('',
     url(r'^invalid$', 'Metten.views.invalid_login'),
     url(r'^register$', 'Metten.views.register_user'),
     # url(r'^register_success$', 'Metten.views.register_success'),
-
 	url(r'^survey$', direct_to_template, {'template': 'survey.html'}),
-
 	url(r'^metten$', direct_to_template, {'template': 'metten.html'}),
 
 

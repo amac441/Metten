@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/libs/ng-mobile-menu.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/libs/bootstrap.min.css">
     <!--<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">-->
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/libs/dhtmlxscheduler.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/layout.css" />
 
@@ -27,16 +29,15 @@
 	<script src="{{ STATIC_URL }}js/libs/moment.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery.1.9.1.min.js"><\/script>')</script>
+
 	<!-- <script src="{{ STATIC_URL }}js/libs/bootstrap.min.js"></script>	-->
 	<script src="{{ STATIC_URL }}js/libs/angular/angular.min.js"></script>
 	<script src="{{ STATIC_URL }}js/libs/angular/angular-resource.min.js"></script>
     <script src="{{ STATIC_URL }}js/libs/angular/angular-cookies.min.js"></script>
 
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.5.0.js"></script>
-
-
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/ng-mobile-menu.js"></script>
-
+    <script src="{{ STATIC_URL }}js/libs/dhtmlxscheduler.js"></script>
 
 	<script src="{{ STATIC_URL }}js/app/app.js"></script>
 
@@ -70,6 +71,7 @@
                     <h5><li><a href="#/calendar" class="calendar">Calendar</a></li></h5>
                     <h5><li><a href="#/performance" class="performance">Performance</a></li></h5>
                     <h5><li><a href="#/add" class="add">Add Items</a></li></h5>
+                    <h5><li><a href="#/dashboard" class="add">Dashboard</a></li></h5>
                 </ol>
                 </nav>
             </div>
@@ -94,6 +96,7 @@
                                     <li><a href="#/calendar"><span>- </span>Calendar</a></li>
                                     <li><a href="#/add"><span>- </span>Add Items</a></li>
                                     <li><a href="#/performance"><span>- </span>Performance</a></li>
+                                    <li><a href="#/dashboard" class="add">Dashboard</a></li>
                                 </ul>
 
 
@@ -113,7 +116,7 @@
                                 {% else %}
                                 <a href = "/login" target="_self">Login</a>
                                 {% endif %}
-                            </li>    
+                            </li>
                                 <!--<a href="5years" class="years" target="_self">5years +</a>
                                 <ul>
                                     <li><a href="5years"><span>- </span>Interests</a></li>

@@ -1,4 +1,4 @@
-years.controller('FeedController', function ($scope, GlobalService, SearchService, TagService) {
+years.controller('FeedController', function ($scope, GlobalService, SearchService, AdderService) {
 
     $scope.globals = GlobalService;
     //options for modals
@@ -33,10 +33,20 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
     ];
 
 
+    // -------- ADDING SELECTED TO DB -----
+
+    $scope.add = function (s) {
+    AdderService.update(s).then(function (data) {
+        s.id = data;
+        //$scope.postModalEdit = false;
+        });
+    };
+
     // -------- MISC -------------------
 
     $scope.toggleActive = function (s) {
         s.active = !s.active;
+        $scope.add(s)
     };
 
     // need to refactor all of these
@@ -44,31 +54,32 @@ years.controller('FeedController', function ($scope, GlobalService, SearchServic
     $scope.oneAtATime = false;
 
 
+
+
     // --------- JOB SEARCH -----------
 
     $scope.searchFor = function () {
         SearchService.get_jobs($scope.searched).then(function (data) {
             $scope.search = data;
-        }
-        )
-    };
 
+        });
+    };
 
     // -------- SITE SEARCHES ----------
 
     $scope.searchStay = function () {
 
 
-            var sites = [
-            'LinkedIn', 'UNL', 'Meetup', 'Alltop', 'ItunesU', 'Amazon', 'Coursera'
-             ]
+            var sites = [ 'Amazon'
+            // 'LinkedIn', 'UNL', 'Meetup', 'Alltop', 'ItunesU', 'Amazon', 'Coursera'
+             ];
 
         var range = [];
         for (var x in sites) {
 
             SearchService.get_stay($scope.stay_search, sites[x]).then(function (data) {
 
-            $scope.b = 'a'
+            $scope.b = 'a';
             $scope.daters_meet = data['Meetup'];
             $scope.daters_unl = data['UNL'];
             $scope.daters_linked = data['LinkedIn'];

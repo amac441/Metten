@@ -38,11 +38,12 @@ years.config(function ($routeProvider) {
 
         .when("/calendar", {
             templateUrl: "../static/js/app/views/calendar.html",
-            controller: "FeedController",
-            // resolve: {
-            //         posts: function (PostService) {
-            //         return PostService.list();  }
-            // }
+            controller: "AdderController",
+            resolve: {
+                events: function (AdderService) {
+                    return AdderService.list();
+                }
+           }
         })
 
 
@@ -50,11 +51,29 @@ years.config(function ($routeProvider) {
                     templateUrl: "../static/js/app/views/add_items.html",
                     controller: "AdderController",
                     resolve: {
-                        adder: function (AdderService) {
+                        events: function (AdderService) {
                             return AdderService.list();
                         }
                     }
                 })
+
+
+        .when("/dashboard", {
+            templateUrl: "../static/js/app/views/dashboard.html",
+            controller: "FeedController",
+            resolve: {
+                }
+            }
+        )
+
+        .when("/individual", {
+            templateUrl: "../static/js/app/views/individual.html",
+            controller: "FeedController",
+            resolve: {
+                }
+            }
+        )
+
 
 
 

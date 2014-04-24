@@ -40,7 +40,7 @@ def flatten(lst):
 
 
 class Alltop(object):
-    # need to add code to determine which URL to hit. 
+    # need to add code to determine which URL to hit.
     URL = 'http://database.alltop.com/'
     #URL = newFunction(object):
 
@@ -64,8 +64,10 @@ class Alltop(object):
                     'title': en,
                     'url': hr,
                     'desc': desc,
-                    'date': date,
-                    'author': site
+                    'date':'',  #took out date
+                    'content_type':'Article',
+                    'author': site,
+                    'id': '',
                 })
         return results
 
@@ -73,11 +75,11 @@ class Alltop(object):
 # --------- AMAZON -----------------------------
 
 class Amazon():
-    
+
 
     @staticmethod
     def get_results(job_title):
-    
+
         config = {
         'access_key' : 'AKIAIAW7JXESRBCM2BLA',
         'secret_key' : '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',
@@ -93,7 +95,7 @@ class Amazon():
 
         for x, item in enumerate(items):
             #try:
-        
+
             try:
                 ansi = str(item.ASIN)
                 offer = api.item_lookup(ansi, ResponseGroup='OfferFull', Condition='All')
@@ -105,11 +107,14 @@ class Amazon():
                 title = str(item.ItemAttributes.Title)
                 author = str(item.ItemAttributes.Author)
                 url = str(item.DetailPageURL)
-                
-                results.append({'author': author, 
+
+                results.append({
+                             'author': author,
                              'title': title,
                              'url': url,
-                             'description':price
+                             'description':price,
+                             'id': '',
+                             'content_type':'Article',
                              }
                 )
             if x == 5:
@@ -158,18 +163,21 @@ class Coursera(object):
                     start_date = course_date
                 else:
                     start_date = ''
-                results.append({'title': item['name'], 
+                results.append({'title': item['name'],
                                 'length': session_json['durationString'],
                                 'url': session_json['homeLink'],
                                 'date': course_date,
                                 'start_date':start_date,
-                                'description': str(session_ids)
+                                'description': str(session_ids),
+                                'content_type':'Course',
+                                'id': ''
                                                                })     #'desc':session_json['shortDescription']
 
         return results
 
 
 # -------- INDEED ------------------------------------
+# -------- NEED TO PULL THIS AND THE ODESK THING OUT ---------
 
 class Indeed():
     URL = 'http://api.indeed.com/ads/apisearch?publisher=9988125764049772&q=&l=austin%2C+tx&sort=&radius=&st=&jt=&start=&limit=&fromage=&filter=&latlong=1&co=us&chnl=&userip%20=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2'
@@ -180,8 +188,15 @@ class Indeed():
         content = r.get(url).content
         result_dict = parse(content)
         jobs = result_dict['response']['results']['result'][:3]
-        results = [{'title': job['jobtitle'], 'location': job['formattedLocationFull'], 'author': job['source'], 'url':job['url'], 'desc':job['snippet'], 'date':job['date']} for
-                   job in jobs]
+        results = [{'title': job['jobtitle'],
+                    'location': job['formattedLocationFull'],
+                    'author': job['source'],
+                    'url':job['url'],
+                    'desc':job['snippet'],
+                    'date':job['date'],
+                    'content_type':'Meeting',
+                    'id':''}
+                    for job in jobs]
         return results
 
 
@@ -196,9 +211,13 @@ class ItunesU(object):
         json = get_json(url)
         results = []
         for row in json['results'][0:5]:
-            results.append({'title': row['trackName'], 'desc':row['genres'], 'url':row['trackViewUrl'],
-                        'author': row['collectionName'],                          
-                        'date': row['releaseDate'] } )
+            results.append({'title': row['trackName'],
+                            'desc':row['genres'],
+                            'url':row['trackViewUrl'],
+                            'author': row['collectionName'],
+                            'date': row['releaseDate'],
+                            'content_type':'Podcast',
+                            'id':'' } )
 
         return results
 
@@ -211,9 +230,9 @@ class ItunesU(object):
 #        results = []
 #        url = ItunesPodcasts.URL % quote(job_title)
 #        results.append({'title': item['trackName'], 'desc':session_json['genres'], 'url':session_json['trackViewUrl'],
-#                        'author': session_json['collectionName'], 'length': session_json['durationString'],                         
+#                        'author': session_json['collectionName'], 'length': session_json['durationString'],
 #                        'date': session_json['releaseDate'] } )
-        
+
 #        return results
 
 # -------- LINKEDIN --------------------------------
@@ -239,7 +258,7 @@ class LinkedInner(object):
         selectors = [{'people': ['first-name', 'last-name', 'headline', 'picture-url', 'public-profile-url']}]
         params = {'keywords': job_title, 'postal-code': zip_code, 'country-code': 'us'}
         linked = application.search_profile(selectors=selectors, params=params)
-    
+
         links = linked['people']['values']
 
         results = []
@@ -252,11 +271,13 @@ class LinkedInner(object):
         for link in links:
             try:
                 results.append({
-            
+
                     'title' : link['firstName'] + " " + link['lastName'],
                     'desc' : link['headline'],
                     'image' : link['pictureUrl'],
-                    'url' : link['publicProfileUrl']
+                    'url' : link['publicProfileUrl'],
+                    'content_type':'Meeting',
+                    'id': ''
                         })
             except:
                  a=1
@@ -312,7 +333,7 @@ class Meetup():
         for result in json['results']:
             cleaned_epoch = (result['time'] + result['utc_offset']) / 1000
             formatted_date = datetime.utcfromtimestamp(cleaned_epoch)
-            
+
             try:
                 if result['venue']:
                     venue = result['venue']
@@ -322,20 +343,25 @@ class Meetup():
                     group = result['group']
                 else:
                     group = ""
-            
-                single_res = {'description': result['description'], 'title': result['name'],
-                              'date': formatted_date, 'url': result['event_url'],
-                              'location':venue['city'], 'author':group['name']
+
+                single_res = {'description': result['description'],
+                              'title': result['name'],
+                              'date': formatted_date,
+                              'url': result['event_url'],
+                              'location':venue['city'],
+                              'author':group['name'],
+                              'content_type':'Meeting',
+                              'id': ''
                               }
                 results.append(single_res)
             except:
                  a = 1
-        
+
     #    return results
-    
+
     #@staticmethod
-    #def get_group_event(split_job_title, radius, zip_code):      
-         
+    #def get_group_event(split_job_title, radius, zip_code):
+
         url2 = Meetup.GROUPS % (zip_code, topic, radius, Meetup.API_KEY)
         json2 = get_json(url2)
         results = []
@@ -343,19 +369,25 @@ class Meetup():
             group = res['category']
 
             try:
-                single_res = res['next_event']           
-            
+                single_res = res['next_event']
+
                 time = single_res['time']
                 cleaned_epoch = (time - 18000000) / 1000
-            
+                dat = datetime.utcfromtimestamp(cleaned_epoch)
+
                 rezults = {
-                'date' : datetime.utcfromtimestamp(cleaned_epoch),
+                'date' : dat,
                 'location' : res['city'],
                 'desc' : res['description'],
-                'url' : res['link'],           
+                'url' : res['link'],
                 'author' : res['name'],
-                'title' : single_res['name']}
-            
+                'title' : single_res['name'],
+                #'start_date': dat,
+                #'end_date': end,
+                'content_type':'Meeting',
+                'id': ''
+                }
+
                 results.append(rezults)
             except:
                 a=1
@@ -410,7 +442,10 @@ class UNL():
             single_result = {'title': titles[i].get_text().encode('ascii', 'ignore'),
                              'desc': descriptions[i].get_text().encode('ascii', 'ignore'),
                              'date': dates[i].get_text().encode('ascii', 'ignore'),
-                             'location': locations[i].get_text().encode('ascii','ignore')}
+                             'location': locations[i].get_text().encode('ascii','ignore'),
+                             'content_type':'Meeting',
+                             'id': ''
+                             }
             results.append(single_result)
         return results
 
@@ -459,25 +494,33 @@ class SearchClass():
 
 
     def scrape_sites(self, siter, job_title, radius, zip_code):
-        
-        #result = {}
 
-        sites = {'UNL': ['UNL', UNL], 'Amazon':['Amazon', Amazon], 'Alltop':['Alltop', Alltop], 
-            'Meetup':['Meetup', Meetup], 'Coursera':['Coursera', Coursera],
-            'ItunesU':['ItunesU', ItunesU], 'LinkedIn':['LinkedIn', LinkedInner]}
+        result = {}
 
-        #'Indeed':['Indeed', Indeed], 
-       
-        site_name = sites[siter][0]
+        # sites = {'UNL': ['UNL', UNL], 'Amazon':['Amazon', Amazon], 'Alltop':['Alltop', Alltop],
+        #     'Meetup':['Meetup', Meetup], 'Coursera':['Coursera', Coursera],
+        #     'ItunesU':['ItunesU', ItunesU], 'LinkedIn':['LinkedIn', LinkedInner]}
 
-        site = sites[siter][1]
+        sites = [
+        ('UNL', UNL), ('Amazon', Amazon), ('Alltop', Alltop),
+        ('Meetup', Meetup), ('Coursera', Coursera),
+        ('ItunesU', ItunesU), ('LinkedIn', LinkedInner)
+        ]
+
+        #'Indeed':['Indeed', Indeed],
+
+        # site_name = sites[siter][0]
+        # site = sites[siter][1]
+
 
         threads = []
 
-        t = ScraperThread(site_name, site, job_title, radius, zip_code)
-        t.start()
-        with lock:
-            threads.append(t)
+
+        for site_name, site in sites:
+            t = ScraperThread(site_name, site, job_title, radius, zip_code)
+            t.start()
+            with lock:
+                threads.append(t)
 
         for thread in threads:
             thread.join()
@@ -487,14 +530,15 @@ class SearchClass():
         return result
 
 
+
         #def scrape_sites(self, siter, job_title, radius, zip_code):
-        #sites = {'unl': ['UNL', UNL], 'amazon':['Amazon', Amazon], 'alltop':['Alltop', Alltop], 
+        #sites = {'unl': ['UNL', UNL], 'amazon':['Amazon', Amazon], 'alltop':['Alltop', Alltop],
         #    'meeetup':['Meetup', Meetup], 'indeed':['Indeed', Indeed], 'coursera':['Coursera', Coursera],
         #    'itunes':['ItunesU', ItunesU], 'linked':['LinkedIn', LinkedIn]}
-       
+
         #site_name = sites[siter][0]
         #site = sites[siter][1]
-       
+
         #site_result = ScraperThread(site_name, site, job_title, radius, zip_code)
 
         #result[site_name] = site_result

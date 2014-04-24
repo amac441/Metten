@@ -3,9 +3,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-
 from rest_framework import generics
-from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated, BasePermission, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from django.http import Http404
 from django.contrib.auth.models import User
@@ -64,7 +63,7 @@ class EmailIn(APIView):
          user = request.user
 
          if request.method == 'POST':
-             
+
              #request.POST = data
              data = {
              'sender' : 'bob@mettentot.com',
@@ -73,9 +72,8 @@ class EmailIn(APIView):
              'body-plain' : 'http://www.businessinsider.com/inside-story-of-clinkle-2014-4'
              }
 
-
              response = a.email_in(data, user)
-             
+
              #------ THIS BREAK OUT WILL GO IN THE MODEL -----
              #sender    = request.POST.get('sender')
              #recipient = request.POST.get('recipient')
@@ -84,22 +82,43 @@ class EmailIn(APIView):
              #body_without_quotes = request.POST.get('stripped-text', '')
              # note: other MIME headers are also posted here...
 
-             # attachments:
-             for key in request.FILES:
-                 file = request.FILES[key]
-                 # do something with the file
 
          # Returned text is ignored but HTTP status code matters:
          # Mailgun wants to see 2xx, otherwise it will make another attempt in 5 minutes
          return HttpResponse(response)
 
+class IsOwner(BasePermission):
+    """
+    Custom permission to only allow owners of profile to view or edit it.
+    """
+    def has_object_permission(self, request, view, obj):
+        return (obj.user == request.user and
+            request.method in ['GET', 'PATCH'])
+
 class AdderList(generics.ListCreateAPIView):
     """
-    List all boards, or create a new board.
+    List all added items, or create a new item.
     """
     model = Adder
     serializer_class = AdderSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated, IsAuthenticatedOrReadOnly)
 
-    def pre_save(self, obj):
-        obj.user = self.request.user
+    def get_queryset(self):
+        user = self.request.user
+        return Adder.objects.filter(user=user)
+
+    def put(self,request):
+        a = Adder()
+        user = request.user
+        if request.method == 'PUT':
+            data = request.DATA
+            response = a.item_in(data, user)
+
+        return Response(response)
+
+class AdderAdd(generics.DestroyAPIView):
+
+    model = Adder
+    serializer_class = AdderSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
