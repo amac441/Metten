@@ -5,6 +5,33 @@ from calendar import timegm
 from datetime import timedelta
 
 
+# ---- ADMIN STUFF -------
+
+
+# ---- USER STUFF ----------
+
+# - extending the profile  - http://www.turnkeylinux.org/blog/django-profile
+
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    max_items_per_week = models.IntegerField(blank=True)
+    zip_code = models.IntegerField(blank=True)
+
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+# --- later you can add custom city model field ---
+
+# from models import City
+# import strings
+# from registration.forms import RegistrationForm
+
+# class UserRegistrationForm(RegistrationForm):
+#     city = forms.ModelChoiceField(queryset=City.objects, label=strings.city, empty_label=strings.notDefined)
+
+# ---- TASK ADDITIONS ---------
+
 CONTENT_CHOICES = (
     ('Article', 'Article'),
     ('Podcast', 'Podcast'),

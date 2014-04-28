@@ -4,9 +4,10 @@
 
 	<h3>Register</h3>
 
-			<form action='/register' method='post'>
+			<form action='/register' method='POSTt'>
 			{% csrf_token %}
-			{{form}}
+			{{user_form}}
+			{{profile_forms}}
 			<input class="btn btn-primary" type="submit" value="Register" />
 
 			</form>

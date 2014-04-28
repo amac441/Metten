@@ -2524,6 +2524,10 @@ scheduler._get_event_bar_pos = function (a) {
         y: h
     }
 };
+
+
+// UNDERSTAND WHY THIS IS FIRED
+
 scheduler.render_event_bar = function (a) {
     var b = this._rendered_location,
         c = this._get_event_bar_pos(a),
@@ -2532,8 +2536,9 @@ scheduler.render_event_bar = function (a) {
         f = c.x2;
     if (f) {
         var g = document.createElement("DIV"),
-            h = "dhx_cal_event_clear";
-        a._timed || (h = "dhx_cal_event_line", a.hasOwnProperty("_first_chunk") && a._first_chunk && (h += " dhx_cal_event_line_start"), a.hasOwnProperty("_last_chunk") && a._last_chunk && (h += " dhx_cal_event_line_end"));
+            // h = "dhx_cal_event_clear";
+        // a._timed || (h = "dhx_cal_event_line", a.hasOwnProperty("_first_chunk") && a._first_chunk && (h += " dhx_cal_event_line_start"), a.hasOwnProperty("_last_chunk") && a._last_chunk && (h += " dhx_cal_event_line_end"));
+        (h = "dhx_cal_event_line", a.hasOwnProperty("_first_chunk") && a._first_chunk && (h += " dhx_cal_event_line_start"), a.hasOwnProperty("_last_chunk") && a._last_chunk && (h += " dhx_cal_event_line_end"));
         var k = scheduler.templates.event_class(a.start_date, a.end_date, a);
         k && (h = h + " " + k);
         var i = a.color ? "background:" + a.color + ";" : "",
@@ -2548,6 +2553,11 @@ scheduler.render_event_bar = function (a) {
         b.appendChild(g.firstChild)
     }
 };
+
+
+
+
+
 scheduler._locate_event = function (a) {
     for (var b = null; a && !b && a.getAttribute;) b = a.getAttribute("event_id"), a = a.parentNode;
     return b

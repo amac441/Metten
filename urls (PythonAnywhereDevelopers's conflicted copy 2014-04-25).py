@@ -1,5 +1,5 @@
+from django.conf.urls import url
 from django.conf.urls.defaults import *
-from django.conf.urls import *
 #from django.conf.urls import patterns, include, url
 # from django.views.generic.simple import direct_to_template
 from django.contrib import admin
@@ -9,6 +9,7 @@ from django.contrib import auth
 from hitcount.views import update_hit_count_ajax
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.views.generic import TemplateView
+
 
 
 admin.autodiscover()
@@ -59,6 +60,12 @@ urlpatterns += patterns('',
     #      {'document_root': settings.MEDIA_ROOT}),
 
 	)
+
+
+import debug_toolbar
+urlpatterns += patterns('',
+    url(r'^__debug__/', include(debug_toolbar.urls)),
+)
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns += staticfiles_urlpatterns()

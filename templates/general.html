@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/libs/bootstrap.min.css">
     <!--<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">-->
 
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/libs/dhtmlxscheduler.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/libs/dhtmlxscheduler.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/layout.css" />
 
     <script src="{{ STATIC_URL }}js/libs/snap.js" type="text/javascript" charset="utf-8"></script>
@@ -52,7 +52,7 @@
 
 
 
-        <body data-spy="scroll" id="index" style="zoom: 1;" ng-controller="AppController" ng-init="initialize('{{ user.is_authenticated }}')">
+        <body data-spy="scroll" id="index" style="zoom: 1;" ng-controller="AppController" ng-init="initialize('{{ user.is_authenticated }}')" content="text/html">
             <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
             <!-- put your page content in here -->
             <!-- Adding the ng-app declaration to initialize AngularJS -->

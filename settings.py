@@ -28,7 +28,8 @@ LOGIN_URL = '5years_login'
 LOGOUT_URL = '5years_logout'
 LOGIN_REDIRECT_URL = '/'
 
-
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+AUTH_PROFILE_MODULE = "account.UserProfile"
 
 #'/home/ajkrell/Dropbox/Apps/Metten'
 

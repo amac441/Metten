@@ -9,6 +9,5 @@ class SearchForm(ModelForm):
         exclude = ['from_user']
 
 class LinkedinForm(forms.Form):
-
     search_for = forms.CharField(MinLengthValidator(1))
 
