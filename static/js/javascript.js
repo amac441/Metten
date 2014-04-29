@@ -12,13 +12,13 @@ NOTE: Because of a bug in jQuery with IE8 we had to add an IE stylesheet hack to
 $(document).ready(function() {
 	 
 	//ACCORDION BUTTON ACTION (ON CLICK DO THE FOLLOWING)
-	$('.accordionButton').click(function() {
+	$('.accordionButton111').click(function() {
 
 		//REMOVE THE ON CLASS FROM ALL BUTTONS
-		$('.accordionButton').removeClass('on');
+		$('.accordionButton111').removeClass('on');
 		  
 		//NO MATTER WHAT WE CLOSE ALL OPEN SLIDES
-	 	$('.accordionContent').slideUp('normal');
+	 	$('.accordionContent11').slideUp('normal');
    
 		//IF THE NEXT SLIDE WASN'T OPEN THEN OPEN IT
 		if($(this).next().is(':hidden') == true) {
@@ -36,7 +36,7 @@ $(document).ready(function() {
 	/*** REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
 	
 	//ADDS THE .OVER CLASS FROM THE STYLESHEET ON MOUSEOVER 
-	$('.accordionButton').mouseover(function() {
+	$('.accordionButton11').mouseover(function() {
 		$(this).addClass('over');
 		
 	//ON MOUSEOUT REMOVE THE OVER CLASS
@@ -50,6 +50,6 @@ $(document).ready(function() {
 	/********************************************************************************************************************
 	CLOSES ALL S ON PAGE LOAD
 	********************************************************************************************************************/	
-	$('.accordionContent').hide();
+	$('.accordionContent1').hide();
 
 });
