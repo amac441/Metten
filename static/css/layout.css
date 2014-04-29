@@ -174,12 +174,12 @@ header #nav-wrap {
    border-bottom: 1px solid #e4e3e3;
 }
 #menu {
-   height: 34px;
+   height: 36px;
    width: auto;
    margin: 0;
    padding: 0;
    text-align: left;
-   display:none;
+  
 }
 #menu li {
 	position: relative;
