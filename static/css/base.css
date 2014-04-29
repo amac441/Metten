@@ -629,3 +629,4 @@ legend span {
 form ul li.active{
    background-color:#8ec16d;
 }
+body { display: none; }
