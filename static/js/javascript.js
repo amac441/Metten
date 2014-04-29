@@ -14,20 +14,4 @@ NOTE: Because of a bug in jQuery with IE8 we had to add an IE stylesheet hack to
 	/*** REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
 	
 	//ADDS THE .OVER CLASS FROM THE STYLESHEET ON MOUSEOVER 
-	$('.accordionButton').mouseover(function() {
-		$(this).addClass('over');
-		
-	//ON MOUSEOUT REMOVE THE OVER CLASS
-	}).mouseout(function() {
-		$(this).removeClass('over');										
-	});
 	
-	/*** END REMOVE IF MOUSEOVER IS NOT REQUIRED ***/
-	
-	
-	/********************************************************************************************************************
-	CLOSES ALL S ON PAGE LOAD
-	********************************************************************************************************************/	
-	$('.accordionContent').hide();
-
-});
