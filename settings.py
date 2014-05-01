@@ -12,9 +12,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ajkrell$default',                      # Or path to database file if using sqlite3.
-        'USER': 'ajkrell',                      # Not used with sqlite3.
-        'PASSWORD': 'gogogo',                  # Not used with sqlite3.
+        'NAME': 'amac44$default',                      # Or path to database file if using sqlite3.
+        'USER': 'amac44',                      # Not used with sqlite3.
+        'PASSWORD': 'testing',                  # Not used with sqlite3.
         'HOST': 'mysql.server',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -31,7 +31,7 @@ LOGIN_REDIRECT_URL = '/'
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 AUTH_PROFILE_MODULE = "account.UserProfile"
 
-#'/home/ajkrell/Dropbox/Apps/Metten'
+#'/home/amac44/Dropbox/Apps/Metten'
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.3/ref/settings/#allowed-hosts
@@ -62,7 +62,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/ajkrell/Dropbox/Apps/Metten/media'
+MEDIA_ROOT = '/home/amac44/Metten/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -73,7 +73,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/ajkrell/Dropbox/Apps/Metten/static/'
+STATIC_ROOT = '/home/amac44/Metten/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -86,7 +86,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    "home/ajkrell/Dropbox/Apps/Metten/static",
+    "home/amac44/Metten/static",
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -124,7 +124,7 @@ ROOT_URLCONF = 'Metten.urls'
 TEMPLATE_DIRS = (
 
     #[os.path.join(BASE_DIR, 'templates')]
-    '/home/ajkrell/Dropbox/Apps/Metten/templates'
+    '/home/amac44/Metten/templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -145,7 +145,7 @@ INSTALLED_APPS = (
     'linkedin',
     'rest_framework',
     'goose',
-    'ganalytics',
+    #'ganalytics',
     'debug_toolbar'
 )
 
