@@ -10,7 +10,7 @@ Django==1.5.1
 EasyProcess==0.1.6
 Fabric==1.6.1
 Fiona==0.15
-Flask==0.9
+Flask==1.0
 Flask-Babel==0.8
 Flask-HTTPAuth==2.2.0
 Flask-Login==0.1.3
